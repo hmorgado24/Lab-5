@@ -1,10 +1,11 @@
-wimport RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
+from PCF8591 import photores
 
 GPIO.setmode(GPIO.BCM)
 
 pins = [18,21,22,23]
-LED = GPIO.setup(, GPIO.OUT, initial=0) 
+LED = GPIO.setup(13, GPIO.OUT, initial=0) 
 
 for pin in pins:
   GPIO.setup(pin, GPIO.OUT, initial=0)
@@ -14,7 +15,7 @@ sequence = [ [1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],
         
 state = 0  # current position in stator sequence
 
-def delay_us(tus): # use microseconds to improve time resolution
+def delay_us(tus): 
   endTime = time.time() + float(tus)/ float(1E6)
   while time.time() < endTime:
     pass
@@ -29,16 +30,18 @@ def halfstep(dir):
   delay_us(1000)
 
 def moveSteps(steps, dir):
-  # move the actuation sequence a given number of half steps
   for step in steps:
     halfstep(dir)
 
 class stepper:
-  
   def goangle(ang):
-    nang = ang*4000/360
-    
-    moveSteps(nang, 1)
+    gang = [0]
+    nang = int(ang)*4000/360
+    if gang+ang < 180:
+      moveSteps(nang-gang[0], 1)
+    else:
+      moveSteps(nang-gang[0], -1)
+    gang[0] = [ang]
   
   def zero():
     photor = photores(0x48)
@@ -47,7 +50,5 @@ class stepper:
       moveSteps(100, 1)
     else:
       GPIO.LOW(LED)
-
-
 
 GPIO.cleanup() 
