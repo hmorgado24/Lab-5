@@ -9,7 +9,7 @@ import json
 GPIO.setmode(GPIO.BCM)
 
 pins = [18,21,22,23]
-LED = GPIO.setup(, GPIO.OUT, initial=0) 
+LED = GPIO.setup(13, GPIO.OUT, initial=0) 
 
 for pin in pins:
   GPIO.setup(pin, GPIO.OUT, initial=0)
