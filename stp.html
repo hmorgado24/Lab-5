@@ -1,0 +1,9 @@
+<html>
+<form action="/cgi-bin/cgistp.py" method="POST">
+  <input type="range" name="slider1" min ="0" max="360" value ="0"> <br>
+  <input type="submit" name="angleinput" value="Angle Input"> <br> <br>
+  <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1556346/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Motor+Angle+vs+Time&type=line&xaxis=Time&yaxis=Motor+Angle"></iframe>
+  <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1556346/widgets/375975"></iframe>
+  <input type="submit" name="zangle" value="Zero Angle">
+</form>
+</html>
